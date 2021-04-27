@@ -1,12 +1,19 @@
 package com.udemy.barath.spring.springjdbc.employee.dao.impl;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import com.udemy.barath.spring.springjdbc.employee.Employee;
 import com.udemy.barath.spring.springjdbc.employee.dao.EmployeeDao;
+import com.udemy.barath.spring.springjdbc.employee.dao.rowmapper.EmployeeRowMapper;
 
+@Component("employeeDao")
 public class EmployeeDaoImpl implements EmployeeDao {
 
+	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
@@ -31,6 +38,23 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return result;
 	}
 
+	@Override
+	public Employee read(int id) {
+		String sql = "SELECT * FROM employee WHERE id=?";
+		EmployeeRowMapper rowMapper = new EmployeeRowMapper();
+		Employee employee = jdbcTemplate.queryForObject(sql, rowMapper, id);
+
+		return employee;
+	}
+	
+	@Override
+	public List<Employee> find() {
+		String sql = "SELECT * FROM employee";
+		EmployeeRowMapper rowMapper = new EmployeeRowMapper();
+		List<Employee> result = jdbcTemplate.query(sql, rowMapper);		
+		return result;
+	}
+	
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
 	}
@@ -38,6 +62,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+
+
 
 
 }

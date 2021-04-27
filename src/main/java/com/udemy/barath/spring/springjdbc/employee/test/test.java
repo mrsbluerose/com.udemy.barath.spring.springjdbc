@@ -1,5 +1,7 @@
 package com.udemy.barath.spring.springjdbc.employee.test;
 
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,12 +16,14 @@ public class test {
 				"com/udemy/barath/spring/springjdbc/employee/test/config.xml");
 		EmployeeDao dao = (EmployeeDao) context.getBean("employeeDao");
 		Employee employee = new Employee();
-		employee.setId(2);
-		employee.setFirstName("Bob");
-		employee.setLastName("Smith");
+		//employee.setId(2);
+		//employee.setFirstName("Bob");
+		//employee.setLastName("Smith");
 		//int result = dao.create(employee);
 		//int result = dao.update(employee);
-		int result = dao.delete(1);
+		//int result = dao.delete(1);
+		//Employee result = dao.read(2);
+		List<Employee> result = dao.find();
 		System.out.println("Number of records affected: " + result);
 	}
 
